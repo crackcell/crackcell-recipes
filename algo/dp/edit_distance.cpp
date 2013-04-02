@@ -58,11 +58,10 @@ int edit_distance(const char *s1, const char *s2) {
 
     for (int i = 1; i < len1; i++) {
         for (int j = 1; j < len2; j++) {
-            int cost = 1;
-            if (s1[i] == s2[j]) {
-                cost = 0;
-            }
-            m[i][j] = min(m[i - 1][j - 1] + cost,
+            // 1. replace char: s1[i] to s2[j]
+            // 2. delete char: s1[i]
+            // 3. delete char: s2[i]
+            m[i][j] = min(m[i - 1][j - 1] + (s1[i] == s2[j] ? 0 : 1),
                           m[i - 1][j] + 1,
                           m[i][j - 1] + 1);
         }
