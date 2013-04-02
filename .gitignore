@@ -13,3 +13,4 @@
 *.a
 algo/sort/qsort
 algo/sort/mergesort
+algo/dp/edit_distance
