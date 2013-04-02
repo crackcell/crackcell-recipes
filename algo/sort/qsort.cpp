@@ -39,6 +39,8 @@ int partition(int *buf, int len, int p_pos) {
     }
     swap(&buf[len - 1], &buf[i_pos]);
     p_pos = i_pos;
+
+    printf("partition: ");
     for (size_t i = 0; i < len; i++) {
         if (i == p_pos) {
             printf("[%d] ", buf[i]);

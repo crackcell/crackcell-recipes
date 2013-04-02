@@ -11,7 +11,7 @@
 
 include ../Makefile.env
 
-BUILD_TARGETS = qsort
+BUILD_TARGETS = qsort mergesort
 
 INC = -I../include -I./ -I$(SCWS)/include
 
@@ -25,6 +25,9 @@ all : $(BUILD_TARGETS)
 
 qsort : $(OBJ)
 	$(CC) qsort.o -o qsort
+
+mergesort : $(OBJ)
+	$(CC) mergesort.o -o mergesort
 
 clean :
 	rm -rf $(OBJ) $(OBJ_DEBUG) $(BUILD_TARGETS)
