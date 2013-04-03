@@ -37,12 +37,9 @@ void print_m(const int len1, const int len2) {
     }
 }
 
-int min(const int a, const int b, const int c) {
+static inline int min(const int a, const int b, const int c) {
     int tmp = a < b ? a : b;
-    if (tmp > c) {
-        tmp = c;
-    }
-    return tmp;
+    return tmp > c ? c : tmp;
 }
 
 int edit_distance(const char *s1, const char *s2) {
@@ -62,10 +59,10 @@ int edit_distance(const char *s1, const char *s2) {
             // 1. replace char: s1[i] to s2[j]
             // 2. delete char: s1[i]
             // 3. delete char: s2[i]
-            m[i][j] = min(m[i - 1][j - 1] + (s1[i] == s2[j] ? 0 : 1),
+            m[i][j] = min(m[i - 1][j - 1] + (s1[i - 1] == s2[j - 1] ? 0 : 1),
                           m[i - 1][j] + 1,
                           m[i][j - 1] + 1);
-            print_m(len1, len2);
+            //print_m(len1, len2);
         }
     }
 
@@ -74,10 +71,8 @@ int edit_distance(const char *s1, const char *s2) {
 }
 
 int main(int argc, char *argv[]) {
-    //const char *s1 = "asgdfg124234";
-    //const char *s2 = "werfs1";
-    const char *s1 = "b21";
-    const char *s2 = "1";
+    const char *s1 = "asgdfg124234";
+    const char *s2 = "werfs1";
     printf("edit distance: %d\n", edit_distance(s1, s2));
     return 0;
 }
