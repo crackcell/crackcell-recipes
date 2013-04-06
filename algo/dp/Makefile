@@ -11,7 +11,7 @@
 
 include ../Makefile.env
 
-BUILD_TARGETS = edit_distance
+BUILD_TARGETS = edit_distance.exe max_sub_sum.exe
 
 INC = -I../include -I./ -I$(SCWS)/include
 
@@ -23,8 +23,8 @@ OBJ_DEBUG = $(patsubst %.cpp, %_d.o, $(SRC))
 
 all : $(BUILD_TARGETS)
 
-edit_distance : $(OBJ)
-	$(CC) edit_distance.o -o edit_distance
+%.exe : $(OBJ)
+	$(CC) $(patsubst %.exe, %.o, $@) -o $@
 
 clean :
 	rm -rf $(OBJ) $(OBJ_DEBUG) $(BUILD_TARGETS)

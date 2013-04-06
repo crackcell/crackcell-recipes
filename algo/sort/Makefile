@@ -11,9 +11,9 @@
 
 include ../Makefile.env
 
-BUILD_TARGETS = qsort mergesort
+BUILD_TARGETS = qsort.exe mergesort.exe
 
-INC = -I../include -I./ -I$(SCWS)/include
+INC = -I../include -I./
 
 SRC = $(wildcard *.cpp)
 OBJ = $(patsubst %.cpp, %.o, $(SRC))
@@ -23,11 +23,8 @@ OBJ_DEBUG = $(patsubst %.cpp, %_d.o, $(SRC))
 
 all : $(BUILD_TARGETS)
 
-qsort : $(OBJ)
-	$(CC) qsort.o -o qsort
-
-mergesort : $(OBJ)
-	$(CC) mergesort.o -o mergesort
+%.exe : $(OBJ)
+	$(CC) $(patsubst %.exe, %.o, $@) -o $@
 
 clean :
 	rm -rf $(OBJ) $(OBJ_DEBUG) $(BUILD_TARGETS)
