@@ -9,19 +9,23 @@
 #
 #===========================================================================
 
+VERSION = 1.0.0.0
+
 OS = $(shell uname)
 CPU = $(shell uname -m)
 
-CC = clang
-CFLAGS = -g -Wall -D_REENTRANT -D_GNU_SOURCE -D$(OS) -D($CPU) -D__VERSION_ID__="\"$(VERSION)\"" -Wformat -Wall -Werror
-CFLAGS_DEBUG = -g -Wall -D_REENTRANT -D_GNU_SOURCE -D$(OS) -D($CPU) -D__VERSION_ID__="\"$(VERSION)_DEBUG\"" -D_DEBUG
-CFLAGS_TEST = -g -Wall -D_REENTRANT -D_GNU_SOURCE -D$(OS) -D($CPU) -D__VERSION_ID__="\"$(VERSION)_TEST\"" -D_DEBUG
+CC = clang++
+CFLAGS = -g -Wall -D_REENTRANT -D_GNU_SOURCE -D$(OS) -D$(CPU) -D__VERSION_ID__="\"$(VERSION)\"" -Wformat -Wall -Werror
+CFLAGS_DEBUG = -g -Wall -D_REENTRANT -D_GNU_SOURCE -D$(OS) -D$(CPU) -D__VERSION_ID__="\"$(VERSION)_DEBUG\"" -D_DEBUG
+CFLAGS_TEST = -g -Wall -D_REENTRANT -D_GNU_SOURCE -D$(OS) -D$(CPU) -D__VERSION_ID__="\"$(VERSION)_TEST\"" -D_DEBUG
 MAKE = make
 
-LINK = clang
+LINK = clang++
 LINKFLAGS = -rdynamic
 
-%.o : %.c
+LIB = -lblas -lgsl
+
+%.o : %.cpp
 	$(CC) $(CFLAGS) $(INC) -c -o $@ $<
 
 
@@ -36,7 +40,7 @@ BIN = $(patsubst %.cpp, %.exe, $(SRC))
 all : $(BIN)
 
 %.exe : %.o
-	clang++ -o $@ $^ $(LIB)
+	$(CC) -o $@ $^ $(LIB)
 
 clean :
 	rm -rf $(OBJ) $(BIN)
