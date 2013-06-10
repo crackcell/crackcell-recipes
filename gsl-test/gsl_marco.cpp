@@ -26,6 +26,8 @@ int main(int argc, char *argv[]) {
     printf("%f\n", M_LOG2E);
     printf("%f\n", M_LOG10E);
     printf("%f\n", M_LN2);
+    printf("%f\n", M_2_SQRTPI);
+    printf("%f\n", M_SQRT1_2);
     return 0;
 }
 
