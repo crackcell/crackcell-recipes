@@ -9,9 +9,9 @@
 #
 #===========================================================================
 
-include ../Makefile.env
+include Makefile.env
 
-BUILD_TARGETS = edit_distance.exe max_sub_sum.exe
+BUILD_TARGETS = train.exe
 
 INC = -I../include -I./
 
