@@ -1,62 +1,27 @@
-/* -*- encoding: utf-8; indent-tabs-mode: nil -*- */
-
-/***************************************************************
- *
- * Copyright (c) 2013, Tan Menglong <tanmenglong@gmail.com>
- *
- * This program is free software; you can redistribute it
- * and/or modify it under the terms of the GPL licence
- *
- **************************************************************/
-
-/**
- * 
- *
- * @file message1.cpp
- * @author Menglong TAN <tanmenglong@gmail.com>
- * @date Fri Jul 12 23:34:28 2013
- *
- **/
-
-#include <stdio.h>
 #include <mpi/mpi.h>
+#include <stdio.h>
+#include <math.h>
+#include <unistd.h>
+#include <iostream>
 
-int main(int argc, char *argv[]) {
-    int task_count;
-    int rank;
-    int dest;
-    int src;
-    int count;
-    int tag = 1;
+using namespace std;
 
-    char in_msg;
-    char out_msg = 'x';
-
-    MPI_Status status;
-
-    MPI_Init(&argc, &argv);
-    MPI_Comm_size(MPI_COMM_WORLD, &task_count);
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-
-    if (0 == rank) {
-        dest = 1;
-        src = 1;
-        MPI_Send(&out_msg, 1, MPI_CHAR, dest, tag, MPI_COMM_WORLD);
-        MPI_Recv(&in_msg, 1, MPI_CHAR, src, tag, MPI_COMM_WORLD, &status);
-    } else if (1 == rank) {
-        dest = 0;
-        src = 0;
-        MPI_Recv(&in_msg, 1, MPI_CHAR, src, tag, MPI_COMM_WORLD, &status);
-        MPI_Send(&out_msg, 1, MPI_CHAR, dest, tag, MPI_COMM_WORLD);
+int main(int argc, char *argv[]){
+    int myid; // 当前进程的编号
+    int numprocs; // 当前进程的名称
+    int namelen;
+    char processor_name[MPI_MAX_PROCESSOR_NAME];
+    MPI_Init(&argc,&argv);
+    MPI_Comm_rank(MPI_COMM_WORLD,&myid);
+    MPI_Get_processor_name(processor_name,&namelen);
+    int i;
+    for(i=0; i<4; ++i){
+        cout<<"I'm"<<myid<<", sending "<<i<<endl;
+        sleep(1);
+        if(0 == myid && 0 == i){
+            MPI_Barrier(MPI_COMM_WORLD); //进程0将一直等待，直到其他并行进程执行结束
+        }
     }
-
-    MPI_Get_count(&status, MPI_CHAR, &count);
-    printf("task %d: recv %d char(s) from task %d with tag %d\n",
-           rank, count, status.MPI_SOURCE, status.MPI_TAG);
-
-    MPI_Finalize();
-
+    MPI_Finalize(); //由于未执行MPI_Finalize，进程0无法感知到其他进程已退出
     return 0;
 }
-
-/* vim: set expandtab shiftwidth=4 tabstop=4: */
