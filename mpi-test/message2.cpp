@@ -30,6 +30,7 @@ int main(int argc, char *argv[]) {
     int tag = 1;
 
     char in_msg;
+
     char out_msg = 'x';
 
     MPI_Status status;
