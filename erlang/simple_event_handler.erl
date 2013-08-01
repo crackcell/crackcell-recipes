@@ -29,7 +29,7 @@ event_loop(Fun) ->
 	end.
 
 no_op(Any) ->
-	io:format("~s~n", Any).
+	io:format("~w~n", Any).
 
 %%%===================================================================
 %%% Internal functions
