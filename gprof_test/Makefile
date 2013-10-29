@@ -9,3 +9,6 @@ clean :
 profile : all
 	./test1
 	gprof ./test1 > gprof.output
+
+dot : profile
+	gprof ./test1 | gprof2dot > test1.dot
