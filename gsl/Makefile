@@ -14,7 +14,8 @@ VERSION = 1.0.0.0
 OS = $(shell uname)
 CPU = $(shell uname -m)
 
-CC = clang++
+CC = gcc
+LDFLAGS = -static
 CFLAGS = -g -Wall -D_REENTRANT -D_GNU_SOURCE -D$(OS) -D$(CPU) -D__VERSION_ID__="\"$(VERSION)\"" -Wformat -Wall -Werror
 CFLAGS_DEBUG = -g -Wall -D_REENTRANT -D_GNU_SOURCE -D$(OS) -D$(CPU) -D__VERSION_ID__="\"$(VERSION)_DEBUG\"" -D_DEBUG
 CFLAGS_TEST = -g -Wall -D_REENTRANT -D_GNU_SOURCE -D$(OS) -D$(CPU) -D__VERSION_ID__="\"$(VERSION)_TEST\"" -D_DEBUG
@@ -23,26 +24,23 @@ MAKE = make
 LINK = clang++
 LINKFLAGS = -rdynamic
 
-LIB = -lblas -lgsl
+LIB = -lgsl -latlas -lm
 
-%.o : %.cpp
+%.o : %.c
 	$(CC) $(CFLAGS) $(INC) -c -o $@ $<
-
 
 INC = -I../include -I./
 
-SRC = $(wildcard *.cpp)
-OBJ = $(patsubst %.cpp, %.o, $(SRC))
-BIN = $(patsubst %.cpp, %.exe, $(SRC))
+SRC = $(wildcard *.c)
+OBJ = $(patsubst %.c, %.o, $(SRC))
+BIN = $(patsubst %.c, %.exe, $(SRC))
 
 .PHONY : all clean
 
 all : $(BIN)
 
 %.exe : %.o
-	$(CC) -o $@ $^ $(LIB)
+	$(CC) $(LDFLAGS) -o $@ $^ $(LIB)
 
 clean :
 	rm -rf $(OBJ) $(BIN)
-
-

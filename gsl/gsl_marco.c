@@ -12,33 +12,22 @@
 /**
  * 
  *
- * @file gsl_random_gen.cpp
+ * @file gsl_marco.c
  * @author Menglong TAN <tanmenglong@gmail.com>
- * @date Mon Jun 10 11:45:22 2013
+ * @date Mon Jun 10 07:58:30 2013
  *
  **/
 
 #include <stdio.h>
-#include <gsl/gsl_rng.h>
+#include <math.h>
 
-int main (void) {
-    const gsl_rng_type * T;
-    gsl_rng * r;
-
-    int i, n = 10;
-
-    gsl_rng_env_setup();
-
-    T = gsl_rng_default;
-    r = gsl_rng_alloc (T);
-
-    for (i = 0; i < n; i++) {
-        double u = gsl_rng_uniform (r);
-        printf ("%.5f\n", u);
-    }
-
-    gsl_rng_free (r);
-
+int main(int argc, char *argv[]) {
+    printf("%f\n", M_E);
+    printf("%f\n", M_LOG2E);
+    printf("%f\n", M_LOG10E);
+    printf("%f\n", M_LN2);
+    printf("%f\n", M_2_SQRTPI);
+    printf("%f\n", M_SQRT1_2);
     return 0;
 }
 
