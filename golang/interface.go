@@ -40,7 +40,7 @@ func (this Imp1) Method3() int32 {
 	return 1
 }
 
-func doit(inter Interface1) {
+func doit1(inter Interface1) {
 	inter.Method1()
 }
 
@@ -48,5 +48,5 @@ func main() {
 	var imp1 Imp1
 	var inter Interface1
 	inter = Interface1(imp1)
-	doit(inter)
+	doit1(inter)
 }
