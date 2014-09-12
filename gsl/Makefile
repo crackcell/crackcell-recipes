@@ -15,16 +15,16 @@ OS = $(shell uname)
 CPU = $(shell uname -m)
 
 CC = gcc
-LDFLAGS = -static
+#LDFLAGS = -static
 CFLAGS = -g -Wall -D_REENTRANT -D_GNU_SOURCE -D$(OS) -D$(CPU) -D__VERSION_ID__="\"$(VERSION)\"" -Wformat -Wall -Werror
 CFLAGS_DEBUG = -g -Wall -D_REENTRANT -D_GNU_SOURCE -D$(OS) -D$(CPU) -D__VERSION_ID__="\"$(VERSION)_DEBUG\"" -D_DEBUG
 CFLAGS_TEST = -g -Wall -D_REENTRANT -D_GNU_SOURCE -D$(OS) -D$(CPU) -D__VERSION_ID__="\"$(VERSION)_TEST\"" -D_DEBUG
 MAKE = make
 
-LINK = clang++
+LINK = gcc
 LINKFLAGS = -rdynamic
 
-LIB = -lgsl -latlas -lm
+LIB = -lgsl -lblas -lm
 
 %.o : %.c
 	$(CC) $(CFLAGS) $(INC) -c -o $@ $<
